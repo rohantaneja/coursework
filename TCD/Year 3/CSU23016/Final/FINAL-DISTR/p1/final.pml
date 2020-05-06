@@ -14,11 +14,11 @@ inline Input(n) {
 //Number to subtract from LEN is chosen non-deterministically
 inline rand_len(){
   if
-  :: j = LEN - 4
-  :: j = LEN - 3
-  :: j = LEN - 2
-  :: j = LEN - 1
-  :: j = LEN
+  :: j = LEN - 4;
+  :: j = LEN - 3;
+  :: j = LEN - 2;
+  :: j = LEN - 1;
+  :: j = LEN;
   fi
 }
 
@@ -30,8 +30,8 @@ active proctype FA() {
   
   int k = (j - 2); // store (new LEN - 2) for Input() loop
   do
-  :: (j >= 0) -> Input(j); j--; // for every sequence < j
-  :: (j < 0) -> break;
+  :: (k >= 0) -> Input(k); k--; // for every sequence < j
+  :: (k < 0) -> break;
   od
   
   i[j-1] = '.';
