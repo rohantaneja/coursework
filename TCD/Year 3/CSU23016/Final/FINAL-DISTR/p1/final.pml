@@ -12,30 +12,29 @@ inline Input(n) {
 }
 
 //Number to subtract from LEN is chosen non-deterministically
-inline select_length(){
+inline rand_len(){
   if
-  :: i = 1;
-  :: i = 2;
-  :: i = 3;
-  :: i = 4;
-  :: i = 5;
+  :: j = LEN - 4
+  :: j = LEN - 3
+  :: j = LEN - 2
+  :: j = LEN - 1
+  :: j = LEN
   fi
 }
 
 active proctype FA() {
-  int i;
-  select_length();
+  int j;
+  rand_len(); // update j from rand_len()
   byte h;
-  byte i[i];
+  byte i[j];
   
-  int j = i - 2; // Input(i-2)
-
+  int k = (j - 2); // store (new LEN - 2) for Input() loop
   do
-   :: (j >= 0) -> Input(j); j--; // for every sequence < j
-   :: (j < 0) -> break;
+  :: (j >= 0) -> Input(j); j--; // for every sequence < j
+  :: (j < 0) -> break;
   od
   
-  i[i-1] = '.';
+  i[j-1] = '.';
 
 q0: if
     :: i[h] == 'a'  -> printf("@TRANS q0 a q1\n"); h++; goto q1;
