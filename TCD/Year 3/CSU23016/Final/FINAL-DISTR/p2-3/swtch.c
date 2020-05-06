@@ -40,7 +40,7 @@ void printaction(struct action *a){
   if(a->apar>=0) {printf("(%d)",a->apar);}
 }
 
-#define MAXACT 50
+#define MAXACT 100
 
 struct acts {
   struct action *next;
@@ -137,7 +137,7 @@ int readaction(char *tokp, struct acts *as, int l_a){
 
 int readactions(FILE *fp){
 
-  char line[256];
+  char line[LINELENGTH];
   char *tokp;
   int l_p; // pactions index
   char stuff[6];
@@ -150,7 +150,7 @@ int readactions(FILE *fp){
   l_p=999;
 
   // ACT 3
-  fgets( line, 255, fp);
+  fgets( line, LINELENGTH, fp);
   //printf("RAS:LINE IS %s\n", line);
   tokp = strtok( line, WSEP);  // should be "ACT"
   //printf("RAS:tok1 IS %s\n", tokp);

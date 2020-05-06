@@ -13,4 +13,5 @@
 #define FSSIZE       1024  // size of file system in blocks
 #define DISKSIZE     1024
 
+#define LINELENGTH   800
 #define WSEP         " \t\n" // word separators

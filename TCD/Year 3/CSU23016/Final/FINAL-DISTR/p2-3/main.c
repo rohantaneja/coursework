@@ -10,8 +10,8 @@
 #include "file.h"
 
 int readfilestat(FILE *fp) {
-  char line[80];
-  char stuff[80];
+  char line[LINELENGTH];
+  char stuff[LINELENGTH];
   uint l_f; // ftable/inode index
   char l_name[FNLEN] ; // Filename (debugging)
   char l_rw;
@@ -128,7 +128,7 @@ void initptable () {
 }
 
 int readproc(FILE *fp) { // returns 0 if not a proc, 1 otherwise
-  char line[256];
+  char line[LINELENGTH];
   int l_p; // ptable index
   int l_state;        // Process state
   char l_name[17];               // Process name (debugging)
@@ -172,7 +172,7 @@ int readproc(FILE *fp) { // returns 0 if not a proc, 1 otherwise
 
 void loadtables() {
   FILE *fp;
-  char line[80];
+  char line[LINELENGTH];
 
   // fp = fopen( "setup.txt", "r");
   fp = stdin;

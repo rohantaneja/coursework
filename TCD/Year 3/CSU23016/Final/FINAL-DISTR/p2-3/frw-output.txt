@@ -1,0 +1,215 @@
+        Welcome to the xv6 Filesystem Simulator!
+
+
+NDIRECT=3, NINDIRECT=4
+FILE 1 contiguous1 r
+FILE 1 'contiguous1' r/w: r
+BLK 1
+BLK 1 0 +-> 16 @ 1
+BLK 1
+BLK 1 16 +-> 32 @ 2
+BLK 1
+BLK 1 32 +-> 48 @ 3
+FILE 2 contiguous2 w
+FILE 2 'contiguous2' r/w: w
+FILE 3 fragmented3 r
+FILE 3 'fragmented3' r/w: r
+BLK 3
+BLK 3 0 +-> 16 @ 4
+FILE 4 fragmented4 r
+FILE 4 'fragmented4' r/w: r
+BLK 4
+BLK 4 0 +-> 16 @ 5
+BLK 3
+BLK 3 16 +-> 32 @ 6
+BLK 4
+BLK 4 16 +-> 32 @ 7
+BLK 3
+BLK 3 32 +-> 48 @ 8
+BLK 4
+BLK 4 32 +-> 48 @ 9
+BLK 3
+BLK 3 48 +-> 64 @ 10
+BLK 4
+BLK 4 48 +-> 64 @ 11
+BLK 3
+BLK 3 64 +-> 80 @ 12
+BLK 4
+BLK 4 64 +-> 80 @ 13
+ENDFILES
+FILE CONTENTS for 'contiguous1'
+ @0->1 : F1 B0 @1
+ @1->2 : F1 B1 @2
+ @2->3 : F1 B2 @3
+FILE CONTENTS for 'contiguous2'
+FILE CONTENTS for 'fragmented3'
+ @0->4 : F3 B0 @4
+ @1->6 : F3 B1 @6
+ @2->8 : F3 B2 @8
+ @3->10 : F3 B3 @10
+ @4->12 : F3 B4 @12
+FILE CONTENTS for 'fragmented4'
+ @0->5 : F4 B0 @5
+ @1->7 : F4 B1 @7
+ @2->9 : F4 B2 @9
+ @3->11 : F4 B3 @11
+ @4->13 : F4 B4 @13
+DISK DUMP
+[ 0] : 0000
+[ 1] : F1 B0 @1
+[ 2] : F1 B1 @2
+[ 3] : F1 B2 @3
+[ 4] : F3 B0 @4
+[ 5] : F4 B0 @5
+[ 6] : F3 B1 @6
+[ 7] : F4 B1 @7
+[ 8] : F3 B2 @8
+[ 9] : F4 B2 @9
+[10] : F3 B3 @10
+[11] : F4 B3 @11
+[12] : F3 B4 @12
+[13] : F4 B4 @13
+[14] : 0000
+[15] : 0000
+[16] : 0000
+[17] : 0000
+[18] : 0000
+[19] : 0000
+[20] : 0000
+[21] : 0000
+[22] : 0000
+[23] : 0000
+[24] : 0000
+[25] : 0000
+[26] : 0000
+[27] : 0000
+[28] : 0000
+[29] : 0000
+[30] : 0000
+[31] : 0000
+[32] : 0000
+[33] : 0000
+[34] : 0000
+[35] : 0000
+[36] : 0000
+[37] : 0000
+[38] : 0000
+[39] : 0000
+120
+PROC 0 3 P_0 10
+PROCESS 0 RUNNABLE 'P_0' prio: 10
+ACT 0 READ 1 READ 3 READ 4 WRT 2 WRT 2 READ 1 READ 3 READ 4 WRT 2 WRT 2 WRT 2 WRT 2 WRT 2 EXIT
+ READ(1)
+ READ(3)
+ READ(4)
+ WRT(2)
+ WRT(2)
+ READ(1)
+ READ(3)
+ READ(4)
+ WRT(2)
+ WRT(2)
+ WRT(2)
+ WRT(2)
+ WRT(2)
+ EXIT
+ 
+STARTING SCHEDULER
+RUNNING: P_0 prio:100 @     0ms doing READ(1)
+        READABLE
+FILE-READ 1 YIELDS 'F1 B0 @1'
+RUNNING: P_0 prio:100 @   100ms doing READ(3)
+        READABLE
+FILE-READ 3 YIELDS 'F3 B0 @4'
+RUNNING: P_0 prio:100 @   200ms doing READ(4)
+        READABLE
+FILE-READ 4 YIELDS 'F4 B0 @5'
+RUNNING: P_0 prio:100 @   300ms doing WRT(2)
+FILE-WRITE 2 PRODUCES 'WRT F2 @ 0'
+RUNNING: P_0 prio:100 @   500ms doing WRT(2)
+FILE-WRITE 2 PRODUCES 'WRT F2 @ 16'
+RUNNING: P_0 prio:100 @   700ms doing READ(1)
+        READABLE
+FILE-READ 1 YIELDS 'F1 B1 @2'
+RUNNING: P_0 prio:100 @   800ms doing READ(3)
+        READABLE
+FILE-READ 3 YIELDS 'F3 B1 @6'
+RUNNING: P_0 prio:100 @   900ms doing READ(4)
+        READABLE
+FILE-READ 4 YIELDS 'F4 B1 @7'
+RUNNING: P_0 prio:100 @  1000ms doing WRT(2)
+FILE-WRITE 2 PRODUCES 'WRT F2 @ 32'
+RUNNING: P_0 prio:100 @  1200ms doing WRT(2)
+FILE-WRITE 2 PRODUCES 'WRT F2 @ 48'
+RUNNING: P_0 prio:100 @  1400ms doing WRT(2)
+FILE-WRITE 2 PRODUCES 'WRT F2 @ 64'
+RUNNING: P_0 prio:100 @  1600ms doing WRT(2)
+FILE-WRITE 2 PRODUCES 'WRT F2 @ 80'
+RUNNING: P_0 prio:100 @  1800ms doing WRT(2)
+FILE-WRITE 2 PRODUCES 'WRT F2 @ 96'
+RUNNING: P_0 prio:100 @  2000ms doing EXIT
+No RUNNABLE process at time 2005
+FILE CONTENTS for 'contiguous1'
+ @0->1 : F1 B0 @1
+ @1->2 : F1 B1 @2
+ @2->3 : F1 B2 @3
+FILE CONTENTS for 'contiguous2'
+ @0->14 : WRT F2 @ 0
+ @1->15 : WRT F2 @ 16
+ @2->16 : WRT F2 @ 32
+ @3->17 : WRT F2 @ 48
+ @4->18 : WRT F2 @ 64
+ @5->19 : WRT F2 @ 80
+ @6->20 : WRT F2 @ 96
+FILE CONTENTS for 'fragmented3'
+ @0->4 : F3 B0 @4
+ @1->6 : F3 B1 @6
+ @2->8 : F3 B2 @8
+ @3->10 : F3 B3 @10
+ @4->12 : F3 B4 @12
+FILE CONTENTS for 'fragmented4'
+ @0->5 : F4 B0 @5
+ @1->7 : F4 B1 @7
+ @2->9 : F4 B2 @9
+ @3->11 : F4 B3 @11
+ @4->13 : F4 B4 @13
+DISK DUMP
+[ 0] : 0000
+[ 1] : F1 B0 @1
+[ 2] : F1 B1 @2
+[ 3] : F1 B2 @3
+[ 4] : F3 B0 @4
+[ 5] : F4 B0 @5
+[ 6] : F3 B1 @6
+[ 7] : F4 B1 @7
+[ 8] : F3 B2 @8
+[ 9] : F4 B2 @9
+[10] : F3 B3 @10
+[11] : F4 B3 @11
+[12] : F3 B4 @12
+[13] : F4 B4 @13
+[14] : WRT F2 @ 0
+[15] : WRT F2 @ 16
+[16] : WRT F2 @ 32
+[17] : WRT F2 @ 48
+[18] : WRT F2 @ 64
+[19] : WRT F2 @ 80
+[20] : WRT F2 @ 96
+[21] : 0000
+[22] : 0000
+[23] : 0000
+[24] : 0000
+[26] : 0000
+[27] : 0000
+[28] : 0000
+[29] : 0000
+[30] : 0000
+[31] : 0000
+[32] : 0000
+[33] : 0000
+[34] : 0000
+[35] : 0000
+[36] : 0000
+[37] : 0000
+[38] : 0000
+[39] : 0000
