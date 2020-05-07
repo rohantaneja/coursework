@@ -28,11 +28,74 @@ void initproc(struct proc *p) {
     p->quantum = 0;
     p->dynprio = 0;
     // ADD EXTRA FIELD INITIALISATIONS BELOW AS REQUIRED
+    p->counter = 0;
+    p->avgsleep_diff = 0;
 }
 
 void adjustpriority(struct proc *p) {
-  // very simple for now
-  p->dynprio = p->staticprio;
+	
+	/*
+	adjustriority() divided into four sections of calc
+	(1) - 
+	(2) - base time quantum
+	(3) - bonus
+	(4) - returning adjusted priority for process
+	
+	*/
+	
+	// section 1: avg sleep time calc
+	p->counter++; // update proc counter - used to keep track
+	p->avgsleep_diff += clock - p->lastrun;
+	
+	p->avgsleep = (p->avgsleep_diff)/(p->counter);
+	
+	// section 2: quantum calc
+	if (p->staticprio < 120) {
+		p->quantum = (140 - p->staticprio) * 20;
+	}
+	else {
+		p->quantum = (140 - p->staticprio) * 5;
+	}
+
+	// section 3: bonus calculation
+	int bonus;
+	
+	if(p->avgsleep < 100 && p->avgsleep >= 0) {
+		bonus = 0;
+	}	
+	else if(p->avgsleep < 200 && p->avgsleep >= 100) {
+		bonus = 1;
+	}	
+	else if(p->avgsleep < 300 && p->avgsleep >= 200) {
+		bonus = 2;
+	}	
+	else if(p->avgsleep < 400 && p->avgsleep >= 300) {
+		bonus = 3;
+	}	
+	else if(p->avgsleep < 500 && p->avgsleep >= 400) {
+		bonus = 4;
+	}	
+	else if(p->avgsleep < 600 && p->avgsleep >= 500) {
+		bonus = 5;
+	}	
+	else if(p->avgsleep < 700 && p->avgsleep >= 600) {
+		bonus = 6;
+	}	
+	else if(p->avgsleep < 800 && p->avgsleep >= 700) {
+		bonus = 7;
+	}	
+	else if(p->avgsleep < 900 && p->avgsleep >= 800) {
+		bonus = 8;
+	}	
+	else if(p->avgsleep < 1000 && p->avgsleep >= 900) {
+		bonus = 9;
+	}	
+	else if(p->avgsleep >= 1000) {
+		bonus = 10;
+	}
+	
+    // section 4: adjusting priority from calculations
+    p->dynprio = max(100,min(p->staticprio-bonus+5,139));
 }
 
 
