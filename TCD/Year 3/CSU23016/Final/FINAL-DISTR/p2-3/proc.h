@@ -25,7 +25,7 @@ struct proc {
   int dynprio;     // Dynamic Priority - used by scheduler
   // ADD EXTRA FIELDS BELOW AS REQUIRED
   int counter;     // keep track of nos proc occurred
-  int avgsleep_diff;	// keep track of proc
+  int avgsleep_log;	// keep track of proc
 };
 
 struct {
@@ -46,6 +46,8 @@ struct cpu {
 };
 
 #define NCPU 1
+#define min(a,b) (((a)<(b))?(a):(b))
+#define max(a,b) (((a)>(b))?(a):(b))
 
 extern struct cpu cpus[NCPU];
 extern int ncpu;

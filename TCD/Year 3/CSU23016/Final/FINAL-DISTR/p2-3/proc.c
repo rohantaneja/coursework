@@ -29,14 +29,14 @@ void initproc(struct proc *p) {
     p->dynprio = 0;
     // ADD EXTRA FIELD INITIALISATIONS BELOW AS REQUIRED
     p->counter = 0;
-    p->avgsleep_diff = 0;
+    p->avgsleep_log = 0;
 }
 
 void adjustpriority(struct proc *p) {
 	
 	/*
 	adjustriority() divided into four sections of calc
-	(1) - 
+	(1) - avgsleep time
 	(2) - base time quantum
 	(3) - bonus
 	(4) - returning adjusted priority for process
@@ -44,10 +44,11 @@ void adjustpriority(struct proc *p) {
 	*/
 	
 	// section 1: avg sleep time calc
-	p->counter++; // update proc counter - used to keep track
-	p->avgsleep_diff += clock - p->lastrun;
+	p->avgsleep_log *= p->counter;
+	p->avgsleep_log += clock - p->lastrun;
 	
-	p->avgsleep = (p->avgsleep_diff)/(p->counter);
+	p->counter++; // update proc counter - used to keep track
+	p->avgsleep = (p->avgsleep_log)/(p->counter);
 	
 	// section 2: quantum calc
 	if (p->staticprio < 120) {
@@ -94,7 +95,7 @@ void adjustpriority(struct proc *p) {
 		bonus = 10;
 	}
 	
-    // section 4: adjusting priority from calculations
+    // section 4: return adjusted priority from calc
     p->dynprio = max(100,min(p->staticprio-bonus+5,139));
 }
 
