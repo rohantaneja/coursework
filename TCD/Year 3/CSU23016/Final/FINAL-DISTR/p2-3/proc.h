@@ -25,7 +25,6 @@ struct proc {
   int dynprio;     // Dynamic Priority - used by scheduler
   // ADD EXTRA FIELDS BELOW AS REQUIRED
   int counter;     // keep track of nos proc occurred
-  int avgsleep_log;	// keep track of proc
 };
 
 struct {
