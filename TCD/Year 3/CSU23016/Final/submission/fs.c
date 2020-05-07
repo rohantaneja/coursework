@@ -214,7 +214,7 @@ bmap(struct inode *ip, uint bn)
     return addr;
   }
   
-  //bn -= NIND3;
+  //bn -= NIND3; //maybe needed?
   
   panic("bmap: out of range");
   return 0;

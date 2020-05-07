@@ -157,65 +157,7 @@ bmap(struct inode *ip, uint bn)
     //printf("bmap returns %u\n",addr);
     return addr;
   }
-  // tanejar's addition
-  bn -= NINDIRECT;
-  //printf("going indirect level 2!, bn now %u\n",bn);
 
-  if(bn < NIND2){
-    // Load indirect block, allocating if necessary.
-    if((addr = ip->addrs[NDIRECT+1]) == 0)
-      ip->addrs[NDIRECT+1] = addr = indalloc(); // need to allocate indirect
-                                              // page from "RAM"
-    // bp = bread(ip->dev, addr);
-    a = indirect[addr]; //1st layer
-    if((addr = a[bn/(NINDIRECT)]) == 0){
-      a[bn/(NINDIRECT)] = addr = balloc(ip->dev);
-      // log_write(bp);
-    }
-    
-    a = indirect[addr]; //2nd layer
-    if((addr = a[bn%(NINDIRECT)]) == 0){
-      a[bn%(NINDIRECT)] = addr = balloc(ip->dev);
-      // log_write(bp);
-    }
-    // brelse(bp);
-    //printf("bmap returns %u\n",addr);
-    return addr;
-  }
-  
-  bn -= NIND2;
-  //printf("going indirect level 3!, bn now %u\n",bn);
-
-  if(bn < NIND3){
-    // Load indirect block, allocating if necessary.
-    if((addr = ip->addrs[NDIRECT+2]) == 0)
-      ip->addrs[NDIRECT+2] = addr = indalloc(); // need to allocate indirect
-                                              // page from "RAM"
-    // bp = bread(ip->dev, addr);
-    a = indirect[addr]; //1st layer
-    if((addr = a[bn/NIND2]) == 0){
-      a[bn/NIND2] = addr = balloc(ip->dev);
-      // log_write(bp);
-    }
-    
-    a = indirect[addr]; //2nd layer
-    if((addr = a[bn/NINDIRECT]) == 0){
-      a[bn/NINDIRECT] = addr = balloc(ip->dev);
-      // log_write(bp);
-    }
-
-    a = indirect[addr]; //3rd layer
-    if((addr = a[bn%(NINDIRECT)]) == 0){
-      a[bn%(NINDIRECT)] = addr = balloc(ip->dev);
-      // log_write(bp);
-    }
-    // brelse(bp);
-    //printf("bmap returns %u\n",addr);
-    return addr;
-  }
-  
-  //bn -= NIND3;
-  
   panic("bmap: out of range");
   return 0;
 }

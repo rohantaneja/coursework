@@ -24,7 +24,7 @@ struct proc {
   int quantum;     // Base Time Quantum
   int dynprio;     // Dynamic Priority - used by scheduler
   // ADD EXTRA FIELDS BELOW AS REQUIRED
-  int counter;     // keep track of nos proc occurred
+  int step;     // keep track of nos proc occurred
 };
 
 struct {
@@ -45,8 +45,8 @@ struct cpu {
 };
 
 #define NCPU 1
-#define min(X, Y) (((X) < (Y)) ? (X) : (Y))
-#define max(X, Y) (((X) > (Y)) ? (X) : (Y))
+#define min(a, b) ((a) < (b) ? (a) : (b))
+#define max(a, b) ((a) > (b) ? (a) : (b))
 
 extern struct cpu cpus[NCPU];
 extern int ncpu;
