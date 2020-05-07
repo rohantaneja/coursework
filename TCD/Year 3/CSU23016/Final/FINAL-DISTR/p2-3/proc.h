@@ -46,8 +46,8 @@ struct cpu {
 };
 
 #define NCPU 1
-#define min(a,b) (((a)<(b))?(a):(b))
-#define max(a,b) (((a)>(b))?(a):(b))
+#define min(X, Y) (((X) < (Y)) ? (X) : (Y))
+#define max(X, Y) (((X) > (Y)) ? (X) : (Y))
 
 extern struct cpu cpus[NCPU];
 extern int ncpu;
