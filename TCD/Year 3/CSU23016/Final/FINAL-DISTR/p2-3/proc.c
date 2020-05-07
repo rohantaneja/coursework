@@ -29,7 +29,6 @@ void initproc(struct proc *p) {
     p->dynprio = 0;
     // ADD EXTRA FIELD INITIALISATIONS BELOW AS REQUIRED
     p->counter = 0;
-    p->avgsleep_log = 0;
 }
 
 void adjustpriority(struct proc *p) {
@@ -44,11 +43,11 @@ void adjustpriority(struct proc *p) {
 	*/
 	
 	// section 1: avg sleep time calc
-	p->avgsleep_log *= p->counter;
-	p->avgsleep_log += clock - p->lastrun;
+	p->avgsleep *= p->counter; // retrieve total sleep time after process is running
+	p->avgsleep += clock - p->lastrun; // update avgsleep time
 	
 	p->counter++; // update proc counter - used to keep track
-	p->avgsleep = (p->avgsleep_log)/(p->counter);
+	p->avgsleep /= p->counter; // calc avgsleep
 	
 	// section 2: quantum calc
 	if (p->staticprio < 120) {
