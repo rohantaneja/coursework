@@ -1,0 +1,18 @@
+{
+  "name": "mausam-app",
+  "version": "1.0.0",
+  "description": "Mausam - Weather App",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Rohan Taneja",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "request": "^2.88.2",
+    "vue": "^2.6.12",
+    "vue-resource": "^1.5.1"
+  }
+}
