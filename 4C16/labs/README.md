@@ -9,4 +9,4 @@
 | 4   | Feedforward Neural Nets for Image Classification   | model.h5               | 6/6      |
 | 5   | Convolutional Neural Nets for Image Classification | model.h5               | 6/6      |
 | 6   | Self Driving Car (7 laps)                          | car_positions.npz      | 6/6      |
-| 7   | Text generation with LSTM                          | discriminator_model.h5 | 6/8      |
+| 7   | Text generation with LSTM (with NAdam)             | discriminator_model.h5 | 7/8      |
